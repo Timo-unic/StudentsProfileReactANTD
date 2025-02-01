@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { ConfigProvider } from "antd";
+import { BrowserRouter } from "react-router";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
@@ -11,7 +12,9 @@ createRoot(document.getElementById("root")!).render(
                 token: { fontFamily: "Montserrat" },
             }}
         >
-            <App />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </ConfigProvider>
     </StrictMode>
 );

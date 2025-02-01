@@ -2,12 +2,13 @@ import type { MenuProps } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useState } from "react";
+import { Link } from "react-router";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
     {
-        label: "Home",
+        label: <Link to="/">Home</Link>,
         key: "home",
     },
     {
@@ -16,7 +17,7 @@ const items: MenuItem[] = [
         icon: <CaretDownOutlined />,
         children: [
             {
-                label: "Courses",
+                label: <Link to="/courses">Courses</Link>,
                 key: "courses",
             },
         ],
@@ -27,7 +28,7 @@ const items: MenuItem[] = [
         icon: <CaretDownOutlined />,
         children: [
             {
-                label: "Student Profile List",
+                label: <Link to="/students">Student Profile List</Link>,
                 key: "list",
             },
         ],
