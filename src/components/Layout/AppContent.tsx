@@ -29,6 +29,7 @@ const AppContent = () => {
                 style={{
                     padding: 24,
                     height: "100%",
+                    minHeight: "100vh",
                     background: colorBgContainer,
                     borderRadius: borderRadiusLG,
                 }}
