@@ -7,6 +7,10 @@ export function useStudentAxios() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    function addStudent(student: IProfileStudent){
+        setStudents(prev => [...prev, student])
+    }
+
     async function fetchStudents() {
         try {
             setError("");
@@ -26,5 +30,5 @@ export function useStudentAxios() {
         fetchStudents();
     }, []);
 
-    return { students, loading, error };
+    return { students, loading, error,  addStudent };
 }
