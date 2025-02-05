@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import { IProfileStudent } from "../../models";
+import { IProfileStudent } from "../../utils/models";
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import qs from "qs";

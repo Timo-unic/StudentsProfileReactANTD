@@ -1,5 +1,6 @@
 import { Layout } from "antd";
 import AppMenu from "../Menu/AppMenu";
+// import FilterAppInput from "../FilterApp/FilterAppInput";
 
 // type Props = {};
 const AppHeader = () => {
@@ -20,6 +21,7 @@ const AppHeader = () => {
                 Student Profile
             </div>
             <AppMenu />
+            {/* <FilterAppInput /> */}
         </Layout.Header>
     );
 };

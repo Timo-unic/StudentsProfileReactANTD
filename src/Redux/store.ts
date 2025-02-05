@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
+import filterReducer from './filterReducer'
 
 
 export const store = configureStore({
-    reducer: {    }
+    reducer: { 
+      lettersNameState: filterReducer
+       }
   })
 
 export type AppStore = typeof store

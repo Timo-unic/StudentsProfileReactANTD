@@ -1,5 +1,11 @@
+import CourseProfile from "../../components/CourseProfile/CourseProfile";
+
 // type Props = {}
 const CoursesPage = () => {
-    return <div>CoursesPage</div>;
+    return (
+        <>
+            <CourseProfile />
+        </>
+    );
 };
 export default CoursesPage;

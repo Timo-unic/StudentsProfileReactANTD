@@ -1,11 +1,13 @@
 import axios, { AxiosError } from "axios";
-import { IProfileStudent } from "../models";
+import { IProfileStudent } from "../utils/models";
 import { useEffect, useState } from "react";
 
 export function useStudentAxios() {
     const [students, setStudents] = useState<IProfileStudent[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    
+
 
     function addStudent(student: IProfileStudent){
         setStudents(prev => [...prev, student])
@@ -25,10 +27,13 @@ export function useStudentAxios() {
             setError(error.message);
         }
     }
-
+    
     useEffect(() => {
         fetchStudents();
     }, []);
 
-    return { students, loading, error,  addStudent };
+    
+
+
+    return { students, loading, error, addStudent };
 }

@@ -1,10 +1,10 @@
-import { IProfileStudent } from "../../models";
+import { IProfileStudent } from "../../utils/models";
 import {
     DeleteOutlined,
     EditOutlined,
     EllipsisOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card, Space } from "antd";
+import { Avatar, Card, Space, Modal, Button } from "antd";
 
 const { Meta } = Card;
 const paragraphStyle = "text-black";
@@ -13,6 +13,22 @@ type StudentProfileProps = {
     student: IProfileStudent;
 };
 const StudentProfile = ({ student }: StudentProfileProps) => {
+    const showConfirm = () => {
+        Modal.confirm({
+            title: "Confirm",
+            content: "Are You sure that You want to delete this Student?",
+            footer: (_, { CancelBtn }) => (
+                <>
+                    <CancelBtn />
+                    <Button type="primary" danger>
+                        Remove
+                    </Button>
+                    {/* <OkBtn /> */}
+                </>
+            ),
+        });
+    };
+
     return (
         <Space
             direction="vertical"
@@ -30,7 +46,7 @@ const StudentProfile = ({ student }: StudentProfileProps) => {
                 actions={[
                     <EditOutlined key="edit" />,
                     <EllipsisOutlined key="ellipsis" />,
-                    <DeleteOutlined key="delete" />,
+                    <DeleteOutlined key="delete" onClick={showConfirm} />,
                 ]}
                 cover={<img alt={student.lastName} src={student.image} />}
                 bordered={true}
