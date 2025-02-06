@@ -7,7 +7,7 @@ import {
 import { Avatar, Card, Space, Modal, Button } from "antd";
 
 const { Meta } = Card;
-const paragraphStyle = "text-black";
+const paragraphStyle = "text-black font-semibold";
 
 type StudentProfileProps = {
     student: IProfileStudent;
@@ -54,7 +54,7 @@ const StudentProfile = ({ student }: StudentProfileProps) => {
                 <Meta
                     avatar={<Avatar src={student.image} />}
                     title={student.firstName + " " + student.lastName}
-                    description={`Age: ${student.age}; Student Login: ${student.studentLogin}`}
+                    description={`Student Login: ${student.studentLogin}`}
                     style={{ marginBottom: "10px" }}
                 />
                 <div className="text-neutral-500">
@@ -63,6 +63,10 @@ const StudentProfile = ({ student }: StudentProfileProps) => {
                         <span className={paragraphStyle}>
                             {student.description}
                         </span>
+                    </p>
+                    <p>
+                        Age of Student:{" "}
+                        <span className={paragraphStyle}>{student.age}</span>
                     </p>
                     {/* <p>
                     Date of Birth:

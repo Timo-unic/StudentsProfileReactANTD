@@ -1,7 +1,7 @@
 import StudentProfile from "../../components/StudentProfile/StudentProfile";
 import AppIconLoading from "../../components/Loader/AppIconLoading";
 import { useStudentAxios } from "../../hooks/studentUseAxios";
-import { Button, Space } from "antd";
+import { Button, Col, Row, Space } from "antd";
 import AppModal from "../../components/Modal/AppModal";
 import { useEffect, useState } from "react";
 import CreateStudentProfile from "../../components/StudentProfile/CreateStudentProfile";
@@ -67,9 +67,13 @@ const StudentsListPage = () => {
             </Space>
             {(loading || error) && <AppIconLoading error={error} />}
 
-            {filterStudents.map((student) => (
-                <StudentProfile key={student.id} student={student} />
-            ))}
+            <Row gutter={16}>
+                {filterStudents.map((student) => (
+                    <Col span={12}>
+                        <StudentProfile key={student.id} student={student} />
+                    </Col>
+                ))}
+            </Row>
             {isModalOpen && (
                 <AppModal
                     title="Form for Adding Student Profile"
@@ -87,6 +91,7 @@ const StudentsListPage = () => {
 };
 export default StudentsListPage;
 
+//наброски до Редаксу
 // const lettersName = useAppSelector(
 //     (state) => state.lettersNameState.filterBy
 // );
