@@ -4,7 +4,10 @@ import {
     EditOutlined,
     EllipsisOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card, Space, Modal, Button } from "antd";
+import { Avatar, Card, Space } from "antd";
+import axios, { AxiosError } from "axios";
+import { useState } from "react";
+import ConfirmModal from "../Modal/ConfirmModal";
 
 const { Meta } = Card;
 const paragraphStyle = "text-black font-semibold";
@@ -13,20 +16,45 @@ type StudentProfileProps = {
     student: IProfileStudent;
 };
 const StudentProfile = ({ student }: StudentProfileProps) => {
-    const showConfirm = () => {
-        Modal.confirm({
-            title: "Confirm",
-            content: "Are You sure that You want to delete this Student?",
-            footer: (_, { CancelBtn }) => (
-                <>
-                    <CancelBtn />
-                    <Button type="primary" danger>
-                        Remove
-                    </Button>
-                    {/* <OkBtn /> */}
-                </>
-            ),
-        });
+    const [cards, setCards] = useState<IProfileStudent[]>([student]);
+    const [error, setError] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const HandleClickRemove = () => {
+        if (student.id !== undefined && error === "") {
+            deleteItems(student.id);
+            setIsModalOpen(false);
+        } else {
+            console.log("Error deleting student");
+        }
+    };
+
+    const deleteItems = async (id: string) => {
+        try {
+            const response = await axios.delete(
+                `https://localhost:7099/api/StudentProfile/student/${id}`
+            );
+            if (response.status === 200) {
+                setCards(
+                    cards.filter(
+                        (card: IProfileStudent) => card.id !== student.id
+                    )
+                );
+            } else {
+                console.log("Error deleting student");
+            }
+        } catch (e: unknown) {
+            const error = e as AxiosError;
+            setError(error.message);
+        }
     };
 
     return (
@@ -46,7 +74,7 @@ const StudentProfile = ({ student }: StudentProfileProps) => {
                 actions={[
                     <EditOutlined key="edit" />,
                     <EllipsisOutlined key="ellipsis" />,
-                    <DeleteOutlined key="delete" onClick={showConfirm} />,
+                    <DeleteOutlined key="delete" onClick={showModal} />,
                 ]}
                 cover={<img alt={student.lastName} src={student.image} />}
                 bordered={true}
@@ -68,14 +96,14 @@ const StudentProfile = ({ student }: StudentProfileProps) => {
                         Age of Student:{" "}
                         <span className={paragraphStyle}>{student.age}</span>
                     </p>
-                    {/* <p>
-                    Date of Birth:
-                    <span className={paragraphStyle}>
-                        {student.dateOfBirth?.toLocaleDateString()}
-                    </span>
-                </p> */}
                 </div>
             </Card>
+            <ConfirmModal
+                HandleClickRemove={HandleClickRemove}
+                error={error}
+                handleCancel={handleCancel}
+                isModalOpen={isModalOpen}
+            />
         </Space>
     );
 };
