@@ -2,14 +2,10 @@ import { UserOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 
 type IFilterProps = {
-    letterSearch: string;
-    handleLettersChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    filterName: object;
 };
 
-const FilterAppInput = ({
-    letterSearch,
-    handleLettersChange,
-}: IFilterProps) => {
+const FilterAppInput = ({ filterName }: IFilterProps) => {
     return (
         <>
             <div className="flex max-w-auto">
@@ -18,8 +14,7 @@ const FilterAppInput = ({
                     name="filter-lastname"
                     placeholder="enter letters Last Name"
                     prefix={<UserOutlined />}
-                    value={letterSearch}
-                    onChange={handleLettersChange}
+                    {...filterName}
                 />
             </div>
         </>

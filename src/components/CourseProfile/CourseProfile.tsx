@@ -4,6 +4,7 @@ import RadioApp from "./RadioApp";
 
 type ICourseItemProps = {
     course: ICourseProfile;
+    key?: string;
 };
 
 const CourseProfile = ({ course }: ICourseItemProps) => {

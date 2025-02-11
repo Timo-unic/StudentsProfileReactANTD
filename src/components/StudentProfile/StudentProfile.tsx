@@ -14,11 +14,12 @@ const paragraphStyle = "text-black font-semibold";
 
 type StudentProfileProps = {
     student: IProfileStudent;
+    key?: string;
 };
 const StudentProfile = ({ student }: StudentProfileProps) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [cards, setCards] = useState<IProfileStudent[]>([student]);
     const [error, setError] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -28,28 +29,21 @@ const StudentProfile = ({ student }: StudentProfileProps) => {
         setIsModalOpen(true);
     };
 
-    const HandleClickRemove = () => {
-        if (student.id !== undefined && error === "") {
-            deleteItems(student.id);
-            setIsModalOpen(false);
-        } else {
-            console.log("Error deleting student");
-        }
-    };
+    const HandleClickRemove = () =>
+        student.id !== undefined && deleteItemsHandler(student.id);
 
-    const deleteItems = async (id: string) => {
+    const deleteItemsHandler = async (id: string): Promise<void> => {
         try {
             const response = await axios.delete(
                 `https://localhost:7099/api/StudentProfile/student/${id}`
             );
             if (response.status === 200) {
-                setCards(
-                    cards.filter(
-                        (card: IProfileStudent) => card.id !== student.id
-                    )
+                const newCards = cards.filter(
+                    (card: IProfileStudent) => card.id !== student.id
                 );
-            } else {
-                console.log("Error deleting student");
+                setCards(newCards);
+
+                setIsModalOpen(false);
             }
         } catch (e: unknown) {
             const error = e as AxiosError;

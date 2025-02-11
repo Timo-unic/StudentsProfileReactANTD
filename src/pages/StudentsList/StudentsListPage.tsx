@@ -1,34 +1,18 @@
 import StudentProfile from "../../components/StudentProfile/StudentProfile";
 import AppIconLoading from "../../components/Loader/AppIconLoading";
-import { useStudentAxios } from "../../hooks/studentUseAxios";
+import { useStudentAxios } from "../../hooks/useStudentAxios";
 import { Button, Col, Row, Space } from "antd";
 import AppModal from "../../components/Modal/AppModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateStudentProfile from "../../components/StudentProfile/CreateStudentProfile";
 import { IProfileStudent } from "../../utils/models";
 import FilterAppInput from "../../components/FilterApp/FilterAppInput";
+import useFilterName from "../../hooks/useFilterName";
 
-// type Props = {}
 const StudentsListPage = () => {
     const { students, loading, error, addStudent } = useStudentAxios();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [letterSearch, setLetterSearch] = useState("");
-    const [filterStudents, setFilterStudents] =
-        useState<IProfileStudent[]>(students);
-
-    useEffect(() => {
-        setFilterStudents(
-            students.filter((s) =>
-                s.lastName.toLowerCase().includes(letterSearch.toLowerCase())
-            )
-        );
-    }, [letterSearch, students]);
-
-    const handleLettersChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setLetterSearch(event.target.value);
-    };
+    const filterName = useFilterName();
 
     const renderHandleCreateStudent = (student: IProfileStudent) => {
         setIsModalOpen(false);
@@ -57,10 +41,7 @@ const StudentsListPage = () => {
                     zIndex: 50,
                 }}
             >
-                <FilterAppInput
-                    letterSearch={letterSearch}
-                    handleLettersChange={handleLettersChange}
-                />
+                <FilterAppInput filterName={filterName} />
                 <Button type="primary" onClick={showModal}>
                     Add Student Profile
                 </Button>
@@ -68,11 +49,17 @@ const StudentsListPage = () => {
             {(loading || error) && <AppIconLoading error={error} />}
 
             <Row gutter={16}>
-                {filterStudents.map((student) => (
-                    <Col span={12}>
-                        <StudentProfile key={student.id} student={student} />
-                    </Col>
-                ))}
+                {students
+                    .filter((student) =>
+                        student.lastName
+                            .toLowerCase()
+                            .includes(filterName.value.toLowerCase())
+                    )
+                    .map((student) => (
+                        <Col span={12} key={student.id}>
+                            <StudentProfile student={student} />
+                        </Col>
+                    ))}
             </Row>
             {isModalOpen && (
                 <AppModal
@@ -100,3 +87,21 @@ export default StudentsListPage;
 {
     /* .filter((s) => s.lastName.toLowerCase().includes(letters.toLowerCase())) */
 }
+//---filter---
+// const [letterSearch, setLetterSearch] = useState("");
+// const [filterStudents, setFilterStudents] =
+//     useState<IProfileStudent[]>(students);
+
+// useEffect(() => {
+//     setFilterStudents(
+//         students.filter((s) =>
+//             s.lastName.toLowerCase().includes(letterSearch.toLowerCase())
+//         )
+//     );
+// }, [letterSearch, students]);
+
+// const handleLettersChange = (
+//     event: React.ChangeEvent<HTMLInputElement>
+// ) => {
+//     setLetterSearch(event.target.value);
+// };
