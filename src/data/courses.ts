@@ -1,10 +1,5 @@
-type ICourseProfile = {
-    id: string;
-    groupName: string;
-    titleOfCourse: string;
-    trener: string;
-    startDateOfCourse: Date;
-}
+import { ICourseProfile } from "../utils/modelCourse";
+
 
 export const courses: ICourseProfile[] = [
     {

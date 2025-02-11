@@ -1,5 +1,5 @@
 import { Breadcrumb, Layout, theme } from "antd";
-import { Link, Route, Routes } from "react-router";
+import { Link, Route, Routes } from "react-router-dom";
 import HomePage from "../../pages/Home/HomePage";
 import CoursesPage from "../../pages/Courses/CoursesPage";
 import StudentsListPage from "../../pages/StudentsList/StudentsListPage";
@@ -29,6 +29,7 @@ const AppContent = () => {
                 style={{
                     padding: 24,
                     height: "100%",
+                    minHeight: "100vh",
                     background: colorBgContainer,
                     borderRadius: borderRadiusLG,
                 }}
